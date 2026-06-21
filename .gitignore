@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+
+app_data/*
+!app_data/.gitkeep
+output_evidence/*
+!output_evidence/.gitkeep
+output_samples/*
+!output_samples/.gitkeep
+

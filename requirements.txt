@@ -1,0 +1,12 @@
+streamlit
+torch
+torchvision
+ultralytics
+opencv-python-headless
+easyocr
+paddlepaddle
+paddleocr
+google-cloud-vision
+google-genai
+numpy
+pandas
