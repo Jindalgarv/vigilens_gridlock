@@ -558,7 +558,7 @@ with tab_detect:
         wrong_side = st.selectbox("Wrong-side zone", ["left", "right"])
 
         st.subheader("OCR")
-        ocr_mode = st.selectbox("OCR Mode", ["auto", "hybrid", "online", "offline", "easyocr"], index=0)
+        ocr_mode = st.selectbox("OCR Mode", ["gemini", "auto", "hybrid", "online", "offline", "easyocr"], index=0)
         google_key = st.text_input(
             "Gemini / Google OCR API Key",
             value=os.getenv("GRIDLOCK_GOOGLE_OCR_API_KEY") or os.getenv("GEMINI_API_KEY", ""),

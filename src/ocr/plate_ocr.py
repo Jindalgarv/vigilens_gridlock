@@ -36,12 +36,13 @@ class PlateOCR:
     OCR reader for license plate crops.
 
     Engine selection:
+    - "gemini": Gemini Vision only (recommended, requires API key)
     - "hybrid": Gemini Vision -> Google Vision OCR -> EasyOCR -> PaddleOCR
     - "online": Gemini Vision -> Google Vision OCR
     - "offline": EasyOCR -> PaddleOCR
     - "easyocr": EasyOCR only
     - "paddleocr": PaddleOCR only
-    - "auto": hybrid when an API key is configured, otherwise offline
+    - "auto": gemini when an API key is configured, otherwise offline
     - "mock": deterministic fallback only
     """
 
@@ -107,6 +108,8 @@ class PlateOCR:
         return self._empty_result(last_error or "No OCR engine returned a usable plate.")
 
     def _engine_sequence(self):
+        if self.engine == "gemini":
+            return ["gemini_vision"] if self.google_api_key else []
         if self.engine == "online":
             return ["gemini_vision", "google_vision"] if self.google_api_key else []
         if self.engine == "offline":
@@ -120,9 +123,9 @@ class PlateOCR:
                 ["gemini_vision", "google_vision"] if self.google_api_key else []
             ) + ["easyocr", "paddleocr"]
         if self.engine == "auto":
-            return (
-                ["gemini_vision", "google_vision"] if self.google_api_key else []
-            ) + ["easyocr", "paddleocr"]
+            if self.google_api_key:
+                return ["gemini_vision"]
+            return ["easyocr", "paddleocr"]
         return ["easyocr", "paddleocr"]
 
     @staticmethod
